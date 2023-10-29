@@ -2,10 +2,9 @@
   "name": "express",
   "version": "1.0.0",
   "description": "node with express ",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "md azaz",
   "license": "ISC",
