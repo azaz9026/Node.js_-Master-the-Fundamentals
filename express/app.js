@@ -8,6 +8,17 @@ app.get('/' , (req , res)=>{
     res.send(" hello World ")
 })
 
+
+/** Routes Paremeter */
+
+app.get('/courses/:id' , (req , res)=>{
+    res.send(req.params.id)
+})
+
+
+
+
+
 /** Environment variable and PORT */
 
 const port = process.env.PORT || 3000
