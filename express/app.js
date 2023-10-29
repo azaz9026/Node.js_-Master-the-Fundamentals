@@ -1,6 +1,6 @@
-const exprees = require('express')
+const express = require('express')
 
-const app = exprees()
+const app = express()
 
 const courses = [
     {
@@ -22,7 +22,11 @@ const courses = [
 
 ]
 
-/** get post put  delete */
+/** Adding Middleware */
+
+app.use(express.json())
+
+/** get , post , put and  delete */
 
 app.get('/' , (req , res)=>{
     res.send(" hello World ")
@@ -46,6 +50,25 @@ app.get('/courses/:coursename' , (req , res)=>{
     res.send(course)  
 })
 
+
+/** HTTP Get Method */
+
+app.get('/courses' , (req , res)=>{
+    res.send(courses)
+})
+
+
+/** HTTP Post Method */
+
+app.post('/courses' , (req , res)=>{
+    const course = {
+        id : courses.length + 1,
+        name : req.body.name
+    }
+
+    courses.push(course)
+    res.send(course)
+})
 
 
 /** Environment variable and PORT */
