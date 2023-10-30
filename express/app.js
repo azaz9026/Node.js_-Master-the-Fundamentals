@@ -5,6 +5,11 @@ const express = require('express')
 const mymiddlewares = require('./middleWares/middle')
 const my_2_middlewares = require('./middleWares/middle_2')
 
+/** Third party middlewares */
+
+const morgan = require('morgan')
+
+
 const app = express()
 
 const courses = [
@@ -34,6 +39,8 @@ app.use(express.json())
 app.use(mymiddlewares)
 
 app.use(my_2_middlewares)
+
+app.use(morgan())
 
 /** get , post , put and  delete */
 
