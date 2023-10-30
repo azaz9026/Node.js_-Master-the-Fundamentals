@@ -1,5 +1,10 @@
 const express = require('express')
 
+/** importing the middlewares */
+
+const mymiddlewares = require('./middleWares/middle')
+const my_2_middlewares = require('./middleWares/middle_2')
+
 const app = express()
 
 const courses = [
@@ -25,6 +30,10 @@ const courses = [
 /** Adding Middleware */
 
 app.use(express.json())
+
+app.use(mymiddlewares)
+
+app.use(my_2_middlewares)
 
 /** get , post , put and  delete */
 
