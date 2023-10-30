@@ -98,6 +98,32 @@ app.put('/courses/:coursename' , (req , res)=>{
 })
 
 
+/** HTTP Delete Method */
+
+/*
+app.delete('/courses/:coursename' , (req , res) => {
+    let deleteCoureses = courses.filter( course => course.name !== req.params.coursename)
+
+    courses = deleteCoureses
+
+    res.send(courses)
+})
+*/
+
+app.delete('/courses/:id' , (req , res)=>{
+    let  course  = courses.find(course => course.id === parseInt(req.params.id) ) 
+
+    if (!course) res.status(404).send(' the Courses that you find it not in thier ')
+
+        console.log(course)
+
+        const index = courses.indexOf(course)
+        courses.splice(index , 1)
+
+        res.send(course)  
+})
+
+
 
 /** Environment variable and PORT */
 
