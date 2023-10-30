@@ -87,6 +87,18 @@ app.post('/courses' , (req , res)=>{
 })
 
 
+/** HTTP Put Method */
+
+app.put('/courses/:coursename' , (req , res)=>{
+    let course = courses.find(course => course.name === req.params.coursename)
+
+    if (!course) res.status(404).send(' the Courses that you find it not in thier ')
+    course.name = req.body.name
+    res.send(course)  
+})
+
+
+
 /** Environment variable and PORT */
 
 const port = process.env.PORT || 3000
