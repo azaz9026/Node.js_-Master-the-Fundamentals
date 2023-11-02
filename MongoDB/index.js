@@ -30,6 +30,8 @@ const Course = mongoose.model('Course' , courseSchema)
 
 
 
+/** find data  */
+
 async function createCourse(){
 
     const course = new Course({
@@ -51,4 +53,28 @@ async function getCourses(){
 
 }
 
-getCourses();
+//getCourses();
+
+
+/** updateCourses */
+
+async function updateCourses(id){
+
+    const course = await Course.findById(id)
+
+    if(!course) return;
+
+    course.name = "Python"
+
+    course.creator = "steve"
+
+    const updatedCourses = await course.save()
+    console.log(updatedCourses)
+
+}
+
+// updateCourses('65427410590baa34ca3a30e1');
+
+
+
+/** Delete id  */
