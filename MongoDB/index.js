@@ -78,3 +78,13 @@ async function updateCourses(id){
 
 
 /** Delete id  */
+
+async function deleteCourses(id){
+
+    const course = await Course.findByIdAndDelete(id)
+    
+    console.log(course)
+
+}
+
+deleteCourses('65427504da599653f6aca104')
