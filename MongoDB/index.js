@@ -1,28 +1,26 @@
-/**const mongoose = require('mongoose')
+const mongoose = require('mongoose')
+
+/** connections of mongodb */ 
 
 mongoose.connect('mongodb://127.0.0.1/testDatabase')
 .then( () => console.log('Connection is Successful'))
-.catch(err => console.error('Couldnt connect to mongodb' , err))*/
+.catch(err => console.error('Couldnt connect to mongodb' , err))
 
-/** connections of mongodb */
-
-
-const mongoose = require('mongoose')
-
-mongoose.connect('mongodb://127.0.0.1/testDatabase')
-
-.then( ()=> console.log(' Connection is Successful '))
-.catch( err=> console.error(' Couldnt connect to mongodb' , err ))
 
 
 /** Schema */
 
 const courseSchema = new mongoose.Schema({
-    name : {type:String , required:true},
+    name : {type:String , required:true , minlength : 5 , maxlength : 200},
+    category:{
+        type:String,
+        required: true,
+        enum : ['DSA' , 'Web' , 'Mobile' , 'Data Science']
+    },
     creator : {type:String , required:true},
     publishedDate : { type:Date , default:Date.now},
     isPubiished : {type:String , required:true},
-    rating : Number
+    rating : {type:String , required : function(){return this.isPubiished}}
 })
 
 /** model */
@@ -36,12 +34,15 @@ const Course = mongoose.model('Course' , courseSchema)
 async function createCourse(){
 
     const course = new Course({
-        name : "Java",
-        
+        name : "MongoDb",
+        category : "DSA",
+        creator : "Adam",
+        isPubiished : true,
+        rating : 4.5
     })
 
     /** validate() */
-    
+
    try{
     course.validate()
    }
