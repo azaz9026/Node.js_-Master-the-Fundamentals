@@ -47,8 +47,10 @@ async function createCourse(){
     course.validate()
    }
    catch(error){
-    console.error(error.message)
-   }
+    for (field in error.errors){
+       console.log(error.errors[field])
+    }
+  }
 
 }
 
