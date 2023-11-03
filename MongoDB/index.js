@@ -18,10 +18,11 @@ mongoose.connect('mongodb://127.0.0.1/testDatabase')
 /** Schema */
 
 const courseSchema = new mongoose.Schema({
-    name : String,
-    creator : String,
+    name : {type:String , required:true},
+    creator : {type:String , required:true},
     publishedDate : { type:Date , default:Date.now},
-    isPubiished : Boolean
+    isPubiished : {type:String , required:true},
+    rating : Number
 })
 
 /** model */
@@ -36,14 +37,21 @@ async function createCourse(){
 
     const course = new Course({
         name : "Java",
-        creator : "Lux",
-        isPubiished : false
+        
     })
 
-    const result  = await course.save()
-    console.log(result)
+    /** validate() */
+    
+   try{
+    course.validate()
+   }
+   catch(error){
+    console.error(error.message)
+   }
 
 }
+
+createCourse()
 
 
 async function getCourses(){
@@ -87,4 +95,4 @@ async function deleteCourses(id){
 
 }
 
-deleteCourses('65427504da599653f6aca104')
+// deleteCourses('65427504da599653f6aca104')
