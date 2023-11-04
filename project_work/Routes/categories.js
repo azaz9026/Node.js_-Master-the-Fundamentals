@@ -1,5 +1,4 @@
 const express = require('express')
-const Joi = require('joi')
 
 const joi = require('joi')
 
@@ -25,8 +24,12 @@ router.get('/api/categories', (req , res) => {
 
 
 router.post('/api/categories' , (req , res) => {
+
+const {error} = validateData(req.body)
+if(error) res.status(400).send(error.details[0].message)
+
  const category = {
-        id: categories.length + 1,
+        id:  categories.length + 1,
         name : req.body.name
   };
     categories.push(category)
@@ -79,11 +82,13 @@ router.get('/api/categories/:id' , (req , res) => {
 })
 
 /**  validateData a not */
+
+
 function validateData(category){
     const schema = {
-        name : Jio.string.min().required()
+        name : joi.string().min(3).required()
     }
-    return Joi.validate(category , schema)
+    return joi.validate(category , schema)
 }
 
 module.exports = router
