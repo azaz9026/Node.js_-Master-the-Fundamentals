@@ -1,4 +1,5 @@
 const express = require('express')
+const Joi = require('joi')
 
 const joi = require('joi')
 
@@ -76,5 +77,13 @@ router.get('/api/categories/:id' , (req , res) => {
     res.send(category)
 
 })
+
+/**  validateData a not */
+function validateData(category){
+    const schema = {
+        name : Jio.string.min().required()
+    }
+    return Joi.validate(category , schema)
+}
 
 module.exports = router
