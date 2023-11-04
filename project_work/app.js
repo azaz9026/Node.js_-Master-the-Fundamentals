@@ -9,14 +9,18 @@ const categories = [
     {id:1 , name: 'Photography'}
 ]
 
+
 /** Get Method */
+
 
 app.get('/api/categories', (req , res) => {
     res.send(categories)
 })
 
 
+
 /** Post Method */
+
 
 app.post('/api/categories' , (req , res) => {
 
@@ -32,19 +36,21 @@ app.post('/api/categories' , (req , res) => {
 
 /** Put Method */
 
+
 app.put('/api/categories/:id' , (req , res) => {
 
     const category = categories.find(c => c.id === parseInt(req.params.id));
     if(!category) return res.status(404).send(' The Category with the given ID was not found. ')
 
-    if(error) return res.status(404).send(error.details[0].message);
 
     category.name = req.body.name
     res.send(category)
 
 })
 
+
 /** Delete Method */
+
 
 app.delete('/api/categories/:id' , (req , res) => {
 
@@ -57,3 +63,22 @@ app.delete('/api/categories/:id' , (req , res) => {
     res.send(category)
 
 })
+
+
+/** Get Method with ID */
+
+
+app.get('/api/categories/:id' , (req , res) => {
+
+    const category = categories.find(c => c.id === parseInt(req.params.id));
+    if(!category) return res.status(404).send(' The genre with the given ID was not found. ')
+
+    res.send(category)
+
+})
+
+/** port number */
+
+
+const port = process.env.PORT || 3000
+app.listen(port , () => console.log( `the port is listening ${port}....` ))
