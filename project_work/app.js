@@ -3,10 +3,14 @@ const express = require('express')
 
 const app = express()
 
+/** Adding JSON Middleware */
+
+app.use(express.json())
+
 const categories = [
-    {id:1 , name: 'Web'},
-    {id:1 , name: 'Mobile'},
-    {id:1 , name: 'Photography'}
+    {id:1 , name : 'Web'},
+    {id:1 , name : 'Mobile'},
+    {id:1 , name : 'Photography'},
 ]
 
 
@@ -23,11 +27,10 @@ app.get('/api/categories', (req , res) => {
 
 
 app.post('/api/categories' , (req , res) => {
-
-    const category = {
-        id : categories.length + 1,
+ const category = {
+        id: categories.length + 1,
         name : req.body.name
-    }
+  };
     categories.push(category)
     res.send(category)
 
@@ -77,8 +80,8 @@ app.get('/api/categories/:id' , (req , res) => {
 
 })
 
-/** port number */
 
+/** port number */
 
 const port = process.env.PORT || 3000
 app.listen(port , () => console.log( `the port is listening ${port}....` ))
