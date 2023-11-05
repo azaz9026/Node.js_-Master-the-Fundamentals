@@ -1,20 +1,28 @@
 const express = require('express')
 
+const mongoose = require('mongoose')
+
 const joi = require('joi')
 
 const router = express.Router()
 
-const categories = [
-    {id:1 , name : 'Web'},
-    {id:2 , name : 'Mobile'},
-    {id:3 , name : 'Photography'},
-]
+/** Schema */
+
+const categorySchema = new mongoose.Schema({
+    name : {type : String , required : true , minlength : 3 , maxlength : 30},
+    
+})
+
+/** model */
+
+const Category =  mongoose.model('category' , categorySchema)
 
 
 /** Get Method */
 
 
-router.get('/api/categories', (req , res) => {
+router.get('/api/categories', async (req , res) => {
+    let categories = await Category.find()
     res.send(categories)
 })
 
@@ -23,17 +31,16 @@ router.get('/api/categories', (req , res) => {
 /** Post Method */
 
 
-router.post('/api/categories' , (req , res) => {
+router.post('/api/categories' , async (req , res) => {
 
 const {error} = validateData(req.body)
 if(error) res.status(400).send(error.details[0].message)
 
- const category = {
-        id:  categories.length + 1,
-        name : req.body.name
-  };
-    categories.push(category)
-    res.send(category)
+ const category = new Category({
+    name : req.body.name
+})
+await category.save()
+res.send(category)
 
 })
 
@@ -43,7 +50,11 @@ if(error) res.status(400).send(error.details[0].message)
 
 router.put('/api/categories/:id' , (req , res) => {
 
-    const category = categories.find(c => c.id === parseInt(req.params.id));
+    const {error} = validateData(req.body)
+    if(error) res.status(400).send(error.details[0].message)
+
+    const category = Category.findByIdAndUpdate(req.params.id , {name : req.body.name} , {new : true})
+
     if(!category) return res.status(404).send(' The Category with the given ID was not found. ')
 
 
