@@ -1,27 +1,13 @@
 const express = require('express')
 
-const mongoose = require('mongoose')
-
-const joi = require('joi')
-
 const router = express.Router()
 
-/** Schema */
-
-const categorySchema = new mongoose.Schema({
-    name : {type : String , required : true , minlength : 3 , maxlength : 30},
-    
-})
-
-/** model */
-
-const Category =  mongoose.model('category' , categorySchema)
 
 
 /** Get Method */
 
 
-router.get('/api/categories', async (req , res) => {
+router.get('/', async (req , res) => {
     let categories = await Category.find()
     res.send(categories)
 })
@@ -31,7 +17,7 @@ router.get('/api/categories', async (req , res) => {
 /** Post Method */
 
 
-router.post('/api/categories' , async (req , res) => {
+router.post('/' , async (req , res) => {
 
 const {error} = validateData(req.body)
 if(error) res.status(400).send(error.details[0].message)
@@ -48,7 +34,7 @@ res.send(category)
 /** Put Method */
 
 
-router.put('/api/categories/:id' , async (req , res) => {
+router.put('/:id' , async (req , res) => {
 
     const {error} = validateData(req.body)
     if(error) res.status(400).send(error.details[0].message)
@@ -65,7 +51,7 @@ router.put('/api/categories/:id' , async (req , res) => {
 /** Delete Method */
 
 
-router.delete('/api/categories/:id' , async (req , res) => {
+router.delete('/:id' , async (req , res) => {
 
     const category = await Category.findByIdAndDelete(req.params.id)
 
@@ -79,7 +65,7 @@ router.delete('/api/categories/:id' , async (req , res) => {
 /** Get Method find by ID */
 
 
-router.get('/api/categories/:id' , async (req , res) => {
+router.get('/:id' , async (req , res) => {
 
     const category = await Category.findById(req.params.id)
 
@@ -89,14 +75,6 @@ router.get('/api/categories/:id' , async (req , res) => {
 
 })
 
-/**  validateData a not */
 
-
-function validateData(category){
-    const schema = {
-        name : joi.string().min(3).required()
-    }
-    return joi.validate(category , schema)
-}
 
 module.exports = router

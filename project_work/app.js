@@ -12,7 +12,8 @@ mongoose.connect('mongodb://127.0.0.1/learningPlatform')
 /** Adding JSON Middleware */
 
 app.use(express.json())
-app.use(categories)
+app.use('/api/categories' , categories)
+app.use('/api/students' , students)
 
 
 /** port number */
