@@ -68,21 +68,22 @@ router.put('/api/categories/:id' , async (req , res) => {
 router.delete('/api/categories/:id' , async (req , res) => {
 
     const category = await Category.findByIdAndRemove(req.params.id)
-    
-    if(!category) return res.status(404).send(' The  Category with the given ID was not found. ')
+
+    if(!category) return res.status(404).send(' The Category with the given ID was not found. ')
 
     res.send(category)
 
 })
 
 
-/** Get Method with ID */
+/** Get Method find by ID */
 
 
-router.get('/api/categories/:id' , (req , res) => {
+router.get('/api/categories/:id' , async (req , res) => {
 
-    const category = categories.find(c => c.id === parseInt(req.params.id));
-    if(!category) return res.status(404).send(' The  Category with the given ID was not found. ')
+    const category = await Category.findById(req.params.id)
+
+    if(!category) return res.status(404).send(' The Category with the given ID was not found. ')
 
     res.send(category)
 
