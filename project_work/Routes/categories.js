@@ -48,17 +48,15 @@ res.send(category)
 /** Put Method */
 
 
-router.put('/api/categories/:id' , (req , res) => {
+router.put('/api/categories/:id' , async (req , res) => {
 
     const {error} = validateData(req.body)
     if(error) res.status(400).send(error.details[0].message)
 
-    const category = Category.findByIdAndUpdate(req.params.id , {name : req.body.name} , {new : true})
+    const category = await Category.findByIdAndUpdate(req.params.id , {name : req.body.name} , {new : true})
 
     if(!category) return res.status(404).send(' The Category with the given ID was not found. ')
 
-
-    category.name = req.body.name
     res.send(category)
 
 })
@@ -67,14 +65,12 @@ router.put('/api/categories/:id' , (req , res) => {
 /** Delete Method */
 
 
-router.delete('/api/categories/:id' , (req , res) => {
+router.delete('/api/categories/:id' , async (req , res) => {
 
-    const category = categories.find(c => c.id === parseInt(req.params.id));
-    if(!category) return res.status(404).send(' The genre with the given ID was not found. ')
+    const category = await Category.findByIdAndRemove(req.params.id)
+    
+    if(!category) return res.status(404).send(' The  Category with the given ID was not found. ')
 
-
-    const index = categories.indexOf(category);
-    categories.splice(index , 1)
     res.send(category)
 
 })
@@ -86,7 +82,7 @@ router.delete('/api/categories/:id' , (req , res) => {
 router.get('/api/categories/:id' , (req , res) => {
 
     const category = categories.find(c => c.id === parseInt(req.params.id));
-    if(!category) return res.status(404).send(' The genre with the given ID was not found. ')
+    if(!category) return res.status(404).send(' The  Category with the given ID was not found. ')
 
     res.send(category)
 
