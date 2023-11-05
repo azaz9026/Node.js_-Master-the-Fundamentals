@@ -25,3 +25,7 @@ function validateData(category){
     }
     return joi.validate(category , schema)
 }
+
+
+exports.Category = category
+exports.validate = validateData

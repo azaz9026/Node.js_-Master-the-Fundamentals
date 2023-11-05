@@ -1,5 +1,5 @@
 const express = require('express')
-
+const {Category , validate} = require('../models/categoriesModel')
 const router = express.Router()
 
 
@@ -19,7 +19,7 @@ router.get('/', async (req , res) => {
 
 router.post('/' , async (req , res) => {
 
-const {error} = validateData(req.body)
+const {error} = validate(req.body)
 if(error) res.status(400).send(error.details[0].message)
 
  const category = new Category({
@@ -36,7 +36,7 @@ res.send(category)
 
 router.put('/:id' , async (req , res) => {
 
-    const {error} = validateData(req.body)
+    const {error} = validate(req.body)
     if(error) res.status(400).send(error.details[0].message)
 
     const category = await Category.findByIdAndUpdate(req.params.id , {name : req.body.name} , {new : true})
